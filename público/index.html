@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agenda de Cabeleireiro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Controle de agendamentos profissionais</p>
+        <h1>Agenda de Cabeleireiro</h1>
+        <p class="hero-subtitle">Sistema CRUD para controle de agendamentos profissionais</p>
+      </div>
+
+      <div class="hero-card">
+        <div>
+          <span class="hero-card-label">Tema</span>
+          <strong>Cabeleireiro</strong>
+        </div>
+        <div>
+          <span class="hero-card-label">Tecnologia</span>
+          <strong>Node + MySQL</strong>
+        </div>
+        <div>
+          <span class="hero-card-label">Interface</span>
+          <strong>HTML, CSS e JS puro</strong>
+        </div>
+      </div>
+    </header>
+
+    <div id="mensagem" class="alert" role="status" aria-live="polite" hidden></div>
+
+    <main class="dashboard">
+      <section class="card form-card" id="formCard">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Cadastro</p>
+            <h2>Registrar ou editar agendamento</h2>
+          </div>
+          <span class="section-note">Campos com * sao obrigatorios</span>
+        </div>
+
+        <form id="agendamentoForm" class="form-grid">
+          <input type="hidden" id="idAgendamento" />
+
+          <label class="field">
+            <span>Nome do solicitante *</span>
+            <input id="NomeSolicitante" type="text" maxlength="254" placeholder="Ex: Mariana Alves" required />
+          </label>
+
+          <label class="field">
+            <span>Telefone *</span>
+            <input id="TelefoneSolicitante" type="tel" maxlength="15" placeholder="Ex: 11988887777" required />
+          </label>
+
+          <label class="field">
+            <span>Servico *</span>
+            <input id="Servico" type="text" maxlength="100" placeholder="Ex: Corte masculino" required />
+          </label>
+
+          <label class="field">
+            <span>Nome do profissional *</span>
+            <input id="NomeProfissional" type="text" maxlength="254" placeholder="Ex: Camila Rocha" required />
+          </label>
+
+          <label class="field">
+            <span>Data e hora do agendamento *</span>
+            <input id="DataHoraAgendamento" type="datetime-local" step="60" required />
+          </label>
+
+          <label class="field field-full">
+            <span>Observacoes</span>
+            <textarea id="Observacoes" rows="4" placeholder="Informacoes extras sobre o atendimento"></textarea>
+          </label>
+
+          <div class="form-actions field-full">
+            <button type="submit" class="btn btn-primary" id="btnSalvar">Salvar agendamento</button>
+            <button type="button" class="btn btn-secondary" id="btnCancelarEdicao" hidden>Cancelar edicao</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="card filter-card">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Filtros</p>
+            <h2>Localizar agendamentos</h2>
+          </div>
+        </div>
+
+        <div class="filters-stack">
+          <label class="field">
+            <span>Buscar por nome do solicitante</span>
+            <input id="filtroNome" type="text" placeholder="Digite um nome" />
+          </label>
+
+          <label class="field">
+            <span>Buscar por profissional</span>
+            <input id="filtroProfissional" type="text" placeholder="Digite um profissional" />
+          </label>
+
+          <div class="filter-actions">
+            <button type="button" class="btn btn-primary" id="btnBuscar">Buscar</button>
+            <button type="button" class="btn btn-ghost" id="btnLimpar">Limpar</button>
+          </div>
+        </div>
+
+        <div class="status-filter-group">
+          <p class="status-filter-title">Visualizacao rapida</p>
+          <div class="status-buttons">
+            <button type="button" class="chip active" data-status="all">Ver todos</button>
+            <button type="button" class="chip" data-status="pendente">Pendentes</button>
+            <button type="button" class="chip" data-status="realizado">Realizados</button>
+            <button type="button" class="chip" data-status="cancelado">Cancelados</button>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat">
+            <span>Total</span>
+            <strong id="statTotal">0</strong>
+          </div>
+          <div class="stat">
+            <span>Pendentes</span>
+            <strong id="statPendentes">0</strong>
+          </div>
+          <div class="stat">
+            <span>Realizados</span>
+            <strong id="statRealizados">0</strong>
+          </div>
+          <div class="stat">
+            <span>Cancelados</span>
+            <strong id="statCancelados">0</strong>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <section class="card list-card">
+      <div class="section-heading section-heading-inline">
+        <div>
+          <p class="section-kicker">Lista</p>
+          <h2>Agendamentos cadastrados</h2>
+        </div>
+        <span class="section-note" id="listaResumo">Carregando dados...</span>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Solicitante</th>
+              <th>Telefone</th>
+              <th>Servico</th>
+              <th>Profissional</th>
+              <th>Data e hora</th>
+              <th>Status</th>
+              <th>Acoes</th>
+            </tr>
+          </thead>
+          <tbody id="agendamentosTabela">
+            <tr>
+              <td colspan="8" class="empty-cell">Carregando agendamentos...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

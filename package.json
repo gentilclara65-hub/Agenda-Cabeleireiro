@@ -1,0 +1,31 @@
+{
+  "name": "agenda-cabeleireiro-crud",
+  "version": "1.0.0",
+  "description": "Aplicacao CRUD para controle de agendamentos de um salao de cabeleireiro.",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "migrate": "knex migrate:latest --knexfile knexfile.js",
+    "seed": "knex seed:run --knexfile knexfile.js"
+  },
+  "keywords": [
+    "crud",
+    "agenda",
+    "cabeleireiro",
+    "express",
+    "knex",
+    "mysql"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "knex": "^3.1.0",
+    "mysql2": "^3.14.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
