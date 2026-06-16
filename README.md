@@ -22,8 +22,9 @@ Controle de Agendamento de Atendimento Profissional - Cabeleireiro.
 - Migration e seed com dados de exemplo
 - Documentacao completa em `documentos`
 - Script SQL completo em `banco-de-dados/database-agenda-cabeleireiro.sql`
-## Deploy Vercel 
-https://agenda-cabeleireiro-crud.vercel.app/
+
+## Vercel 
+'Vercel'https://agenda-cabeleireiro-crud.vercel.app/
 
 ## Tecnologias usadas
 
